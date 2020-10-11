@@ -4,3 +4,4 @@ jflat.egg-info
 .coverage
 .idea/
 *__pycache__*
+test.json

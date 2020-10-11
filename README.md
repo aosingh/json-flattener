@@ -11,7 +11,7 @@ Python utility to flatten a JSON object
 pip install git+https://github.com/aosingh/json-flattener.git
 ```
 
-### Install Dependencies
+### Dependencies
 
 These dependencies are defined as install requirements in the `setup.py` file.  
 You need not install them separately
@@ -20,6 +20,21 @@ You need not install them separately
 - pytest
 
 
+## Unit Test
+
+To run unit test cases, use the `pytest` command
+
+```bash
+pytest --verbose
+```
+
+```text
+collected 15 items                                                                                                                        
+
+jflat/tests/test_jflat.py ...............                                                                                           [100%]
+
+=========================================================== 15 passed in 0.04s ============================================================
+```
 
 ## CLI
 
@@ -36,34 +51,69 @@ Options:
 
 ```
 
-## Test
+## Examples
 
-To run unit test cases, use the `pytest` command
+### Simple json string
+
+```json5
+jflat '{"username":"xyz","password":"xyz"}'
+
+```
+
+```json5
+{
+  "password": "xyz",
+  "username": "xyz"
+}
+```
+
+### File input 
 
 ```bash
-pytest --verbose
+jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json
+```
+
+```json5
+{
+  "$c.e": "\ud83c\udf89\ud83c\udf8a\ud83c\udf87\ud83c\udf86\ud83c\udf08\ud83d\udca5\u2728\ud83d\udcab\ud83d\udc45\ud83d\udeb9\ud83d\udeba\ud83d\udc83\ud83d\ude4c\ud83c\udfc3\ud83d\udc6c",
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.76.": 10,
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.65": "\"i am deeply nested\"",
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.kl": -122200000000000.0,
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.lm": 10000000000.0,
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.jk": null,
+  "b": true,
+  "a": 1
+}
+```
+
+### Sort keys
+
+```bash
+jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json --sort-keys
+```
+
+```json5
+{
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.65": "\"i am deeply nested\"",
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.76.": 10,
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.jk": null,
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.kl": -122200000000000.0,
+  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.lm": 10000000000.0,
+  "$c.e": "\ud83c\udf89\ud83c\udf8a\ud83c\udf87\ud83c\udf86\ud83c\udf08\ud83d\udca5\u2728\ud83d\udcab\ud83d\udc45\ud83d\udeb9\ud83d\udeba\ud83d\udc83\ud83d\ude4c\ud83c\udfc3\ud83d\udc6c",
+  "a": 1,
+  "b": true
+}
+
+```
+
+### Dump the output to a file
+
+```bash5
+jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json --sort-keys --out-file=test.json
 ```
 
 ```text
-collected 15 items                                                                                                                        
-
-jflat/tests/test_jflat.py::test_empty_dict PASSED                                                                                   [  6%]
-jflat/tests/test_jflat.py::test_plain_dict PASSED                                                                                   [ 13%]
-jflat/tests/test_jflat.py::test_null_value PASSED                                                                                   [ 20%]
-jflat/tests/test_jflat.py::test_bool_value PASSED                                                                                   [ 26%]
-jflat/tests/test_jflat.py::test_unicode PASSED                                                                                      [ 33%]
-jflat/tests/test_jflat.py::test_control_chars PASSED                                                                                [ 40%]
-jflat/tests/test_jflat.py::test_quotes PASSED                                                                                       [ 46%]
-jflat/tests/test_jflat.py::test_exponent PASSED                                                                                     [ 53%]
-jflat/tests/test_jflat.py::test_skip_unknown_type PASSED                                                                            [ 60%]
-jflat/tests/test_jflat.py::test_error_on_unknown_type PASSED                                                                        [ 66%]
-jflat/tests/test_jflat.py::test_nesting PASSED                                                                                      [ 73%]
-jflat/tests/test_jflat.py::test_cli PASSED                                                                                          [ 80%]
-jflat/tests/test_jflat.py::test_cli_stdin PASSED                                                                                    [ 86%]
-jflat/tests/test_jflat.py::test_cli_with_sort_keys PASSED                                                                           [ 93%]
-jflat/tests/test_jflat.py::test_cli_output_file PASSED                                                                              [100%]
-
-=========================================================== 15 passed in 0.04s ============================================================
+2020-10-11 13:50:02,456 - Output file path test.json
 ```
 
-## Examples
+
