@@ -151,8 +151,6 @@ is shown below
 jflat < input.json --sort-keys --out-file=output.json
 ```
 
-```
-
 Verify the contents of the output file
 
 ```bash
