@@ -1,0 +1,6 @@
+.pytest_cache
+.venv
+jflat.egg-info
+.coverage
+.idea/
+*__pycache__*

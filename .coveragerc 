@@ -1,0 +1,12 @@
+[run]
+branch = False
+source = jflat
+omit =
+    /*/tests/*
+    .env/*
+    /home/travis/virtualenv/*
+
+[report]
+
+[html]
+directory = htmlcov
