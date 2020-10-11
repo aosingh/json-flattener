@@ -1,5 +1,5 @@
 
-# jflat [![Travis](https://travis-ci.com/aosingh/json-flattener.svg?branch=main)](https://travis-ci.org/aosingh/json-flattener)
+# jflat [![Travis](https://travis-ci.com/aosingh/json-flattener.svg?branch=main)](https://travis-ci.com/github/aosingh/json-flattener)
 [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)]((https://www.python.org/downloads/release/python-370/)) [![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/) [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyPy3](https://img.shields.io/badge/python-PyPy3-blue.svg)](https://www.pypy.org/index.html)
 
@@ -7,17 +7,30 @@ Python utility to flatten a JSON object
 
 ## Install
 
-```bash
-mkdir jflat_test
+`jflat` can be installed using `pip` and `virtualenv`. 
 
-cd jflat_test
+1. Create a local directory where you would like to work from 
 
-virtualenv .venv --python=python3 
+    ```bash
+    mkdir jflat_test
+    
+    cd jflat_test
+    ```
+   
+2. Create a Python virtual environment
 
-source .venv/bin/activate
+    ```bash
+    virtualenv --python=python3 .venv
+    
+    source .venv/bin/activate
+   
+    pip install --upgrade pip
+   ```
 
-pip install git+https://github.com/aosingh/json-flattener.git
-```
+3. Install `jflat` from source using `pip`
+    ```bash
+    pip install git+https://github.com/aosingh/json-flattener.git#egg=jflat
+    ```
 
 ### Dependencies
 
