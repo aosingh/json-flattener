@@ -139,18 +139,27 @@ jflat < input.json --sort-keys
 
 ```
 
-### Dump the output to a file
+### Output to a file
+
+The default behavior is to write the flattened out to stdout. 
+
+If you want to save the flattened JSON object to a file, you can use the `--out-file` option. An example
+is shown below
 
 ```bash5
 jflat < input.json --sort-keys --out-file=output.json
 ```
 
+The log statement prints the path to the output file
+
 ```text
 2020-10-11 13:50:02,456 - Output file is output.json
 ```
 
+Verify the contents of the output file
+
 ```bash
-cat test.json
+cat output.json
 ```
 
 ```json5
