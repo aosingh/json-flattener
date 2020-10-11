@@ -23,14 +23,12 @@ def main(json_string, log_level, out_file, sort_keys):
     if not json_string:
         json_string = click.get_text_stream('stdin').read().strip()
 
-
     data = json.loads(json_string)
 
     flattener = JSONFlattener(data=data)
     flattened_data = flattener()
 
     if out_file is None:
-        LOG.warning("Outfile is None")
         sys.stdout.write(json.dumps(flattened_data, indent=2, sort_keys=sort_keys))
     else:
         out_file = Path(out_file)
