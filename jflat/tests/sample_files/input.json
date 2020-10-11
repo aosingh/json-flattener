@@ -1,0 +1,22 @@
+{
+        "friends": {
+            "1": {
+                "name": "Mr. X",
+                "age": 13,
+                "hobbies": {
+                    "football": true,
+                    "vedic maths": false,
+                    "origami": true
+                }
+            },
+            "2": {
+                "name": "Mr. Y",
+                "age": 56,
+                "hobbies": {
+                    "football": false,
+                    "vedic maths": true,
+                    "origami": false
+                }
+            }
+        }
+    }

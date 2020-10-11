@@ -69,39 +69,72 @@ jflat '{"username":"xyz","password":"xyz"}'
 
 ### File input 
 
-```bash
-jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json
-```
+Let's say our example `input.json` file looks like below
 
 ```json5
 {
-  "$c.e": "\ud83c\udf89\ud83c\udf8a\ud83c\udf87\ud83c\udf86\ud83c\udf08\ud83d\udca5\u2728\ud83d\udcab\ud83d\udc45\ud83d\udeb9\ud83d\udeba\ud83d\udc83\ud83d\ude4c\ud83c\udfc3\ud83d\udc6c",
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.76.": 10,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.65": "\"i am deeply nested\"",
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.kl": -122200000000000.0,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.lm": 10000000000.0,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.jk": null,
-  "b": true,
-  "a": 1
+        "friends": {
+            "1": {
+                "name": "Mr. X",
+                "age": 13,
+                "hobbies": {
+                    "football": true,
+                    "vedic maths": false,
+                    "origami": true
+                }
+            },
+            "2": {
+                "name": "Mr. Y",
+                "age": 56,
+                "hobbies": {
+                    "football": false,
+                    "vedic maths": true,
+                    "origami": false
+                }
+            }
+        }
+}
+```
+
+Invoke the JSON flat command as shown below
+
+```bash
+jflat < input.json
+```
+```json5
+{
+  "friends.2.hobbies.origami": false,
+  "friends.2.hobbies.vedic maths": true,
+  "friends.2.hobbies.football": false,
+  "friends.2.age": 56,
+  "friends.2.name": "Mr. Y",
+  "friends.1.hobbies.origami": true,
+  "friends.1.hobbies.vedic maths": false,
+  "friends.1.hobbies.football": true,
+  "friends.1.age": 13,
+  "friends.1.name": "Mr. X"
 }
 ```
 
 ### Sort keys
 
-```bash
-jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json --sort-keys
-```
+Pass the `--sort-keys` flag to sort the keys alphabetically in the flattened JSON.
 
+```bash
+jflat < input.json --sort-keys
+```
 ```json5
 {
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.65": "\"i am deeply nested\"",
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.76.": 10,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.jk": null,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.kl": -122200000000000.0,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.lm": 10000000000.0,
-  "$c.e": "\ud83c\udf89\ud83c\udf8a\ud83c\udf87\ud83c\udf86\ud83c\udf08\ud83d\udca5\u2728\ud83d\udcab\ud83d\udc45\ud83d\udeb9\ud83d\udeba\ud83d\udc83\ud83d\ude4c\ud83c\udfc3\ud83d\udc6c",
-  "a": 1,
-  "b": true
+  "friends.1.age": 13,
+  "friends.1.hobbies.football": true,
+  "friends.1.hobbies.origami": true,
+  "friends.1.hobbies.vedic maths": false,
+  "friends.1.name": "Mr. X",
+  "friends.2.age": 56,
+  "friends.2.hobbies.football": false,
+  "friends.2.hobbies.origami": false,
+  "friends.2.hobbies.vedic maths": true,
+  "friends.2.name": "Mr. Y"
 }
 
 ```
@@ -109,11 +142,11 @@ jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json --sort-keys
 ### Dump the output to a file
 
 ```bash5
-jflat < /Users/as/jflat/jflat/tests/sample_files/nested.json --sort-keys --out-file=test.json
+jflat < input.json --sort-keys --out-file=output.json
 ```
 
 ```text
-2020-10-11 13:50:02,456 - Output file path test.json
+2020-10-11 13:50:02,456 - Output file is output.json
 ```
 
 ```bash
@@ -123,14 +156,16 @@ cat test.json
 ```json5
 
 {
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.65": "\"i am deeply nested\"",
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.11.32.23.45.56.76.": 10,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.jk": null,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.kl": -122200000000000.0,
-  "$c.d.e.f.k.l.m.n.k.l.f.1.2.3.4.5.6.7.8.9.10.lm": 10000000000.0,
-  "$c.e": "\ud83c\udf89\ud83c\udf8a\ud83c\udf87\ud83c\udf86\ud83c\udf08\ud83d\udca5\u2728\ud83d\udcab\ud83d\udc45\ud83d\udeb9\ud83d\udeba\ud83d\udc83\ud83d\ude4c\ud83c\udfc3\ud83d\udc6c",
-  "a": 1,
-  "b": true
+  "friends.1.age": 13,
+  "friends.1.hobbies.football": true,
+  "friends.1.hobbies.origami": true,
+  "friends.1.hobbies.vedic maths": false,
+  "friends.1.name": "Mr. X",
+  "friends.2.age": 56,
+  "friends.2.hobbies.football": false,
+  "friends.2.hobbies.origami": false,
+  "friends.2.hobbies.vedic maths": true,
+  "friends.2.name": "Mr. Y"
 }
 ```
 

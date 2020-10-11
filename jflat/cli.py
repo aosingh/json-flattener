@@ -36,7 +36,7 @@ def main(json_string, log_level, out_file, sort_keys):
         out_file = Path(out_file)
         if not out_file.parent.exists():
             raise FileNotFoundError(f"Directory {out_file.parent}")
-        LOG.info("Output file path %s", out_file)
+        LOG.info("Output file is %s", out_file)
         with open(out_file, 'w') as fp:
             json.dump(flattened_data, fp, indent=2, sort_keys=sort_keys)
 

@@ -5,3 +5,4 @@ jflat.egg-info
 .idea/
 *__pycache__*
 test.json
+output.json
