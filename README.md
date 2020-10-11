@@ -8,6 +8,14 @@ Python utility to flatten a JSON object
 ## Install
 
 ```bash
+mkdir jflat_test
+
+cd jflat_test
+
+virtualenv .venv --python=python3 
+
+source .venv/bin/activate
+
 pip install git+https://github.com/aosingh/json-flattener.git
 ```
 
@@ -45,7 +53,7 @@ Often it is convenient to test with an inline JSON string. Make sure you enclose
 JSON string in single quotes as shown below
 
 ```bash
-jflat '{"username":"xyz","password":{"hash": "e8c400f94e807f0d374d9c971bec018ee63d9b13bfe23182e1ff7428d9c98cf9"}}'
+jflat '{"username":"xyz","password":{"hash": "e8c400f94e807f0d374d9c971bec018"}}'
 
 ```
 
@@ -53,13 +61,14 @@ The following output will be written to stdout.
 
 ```json5
 {
-  "password.hash": "e8c400f94e807f0d374d9c971bec018ee63d9b13bfe23182e1ff7428d9c98cf9",
+  "password.hash": "e8c400f94e807f0d374d9c971bec018",
   "username": "xyz"
 }
 ```
 
 ### File input 
 
+Additionally, `jflat` can accept input from a file. 
 Let's say our input file `input.json` looks like below
 
 ```json5
@@ -93,7 +102,7 @@ Invoke the JSON flat command as shown below
 ```bash
 jflat < input.json
 ```
-flattened output
+You will see the flattened JSON object printed to stdout
 
 ```json5
 {
@@ -135,19 +144,13 @@ jflat < input.json --sort-keys
 
 ### Save the output to a file
 
-The default behavior is to write the flattened JSON object to stdout. 
-
-If you want to save the flattened JSON object to a file, you can use the `--out-file` option. An example
+The default behavior is to write the flattened JSON object to stdout. If you want to save the flattened JSON object to a file, you can use the `--out-file` option. An example
 is shown below
 
 ```bash5
 jflat < input.json --sort-keys --out-file=output.json
 ```
 
-The log statement prints the path to the output file
-
-```text
-2020-10-11 13:50:02,456 - Output file is output.json
 ```
 
 Verify the contents of the output file
@@ -192,8 +195,7 @@ matrix:
 
 ## Unit Test & Coverage
 
-Unit tests are integrated with the build process. 
-We use `coverage` to run the test cases and generate a coverage report.
+Unit tests are integrated with the build process. We use `coverage` to run the test cases and generate a coverage report.
 
 
 ```bash
@@ -217,7 +219,7 @@ TOTAL                         152      1    99%
 
 ## API
 
-The API can be used to access the flattened Python dict directly. 
+The Python API can be used to access the flattened Python dictionary directly. 
 
 ```python
 from jflat.flattener import JSONFlattener
@@ -248,6 +250,19 @@ data = {
 j = JSONFlattener(data=data)
 flattened_dict = j()
 
+print(flattened_dict)
+
+>>> {'friends.1.age': 13,
+     'friends.1.hobbies.football': True,
+     'friends.1.hobbies.origami': True,
+     'friends.1.hobbies.vedic maths': False,
+     'friends.1.name': 'Mr. X',
+     'friends.2.age': 56,
+     'friends.2.hobbies.football': False,
+     'friends.2.hobbies.origami': False,
+     'friends.2.hobbies.vedic maths': True,
+     'friends.2.name': 'Mr. Y'}         
+
 ```
 
 
@@ -268,4 +283,10 @@ serialize the flattened dict.
 - In the current implementation, if the JSON object has an array, the array will be skipped.
 
 - The name `jflat` is inspired from command-line JSON processor `jq`. 
+
+
+## TODO
+
+- Determine the maximum level of nesting supported.
+
 
