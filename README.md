@@ -17,7 +17,8 @@ Python utility to flatten a JSON object
     cd jflat_test
     ```
    
-2. Create a Python virtual environment
+2. Create an isolated Python virtual environment. 
+  `virtualenv` can be installed using pip as explained [here](https://virtualenv.pypa.io/en/latest/installation.html)
 
     ```bash
     virtualenv --python=python3 .venv
@@ -62,7 +63,7 @@ Options:
 
 ### Simple json string
 
-Often it is convenient to test with an inline JSON string. Make sure you enclose the 
+At times it is convenient to test with an inline JSON string. Make sure you enclose the 
 JSON string in single quotes as shown below
 
 ```bash
@@ -188,7 +189,8 @@ cat output.json
 
 ## Continuous Integration (CI)
 
-The code repository is integrated with Travis CI. Current build matrix is shown below.
+The code repository is integrated with Travis CI. As shown below, in the build matrix, the build process tests
+for Linux and different Python 3 versions. 
 
 ```yaml
 language: python
@@ -203,6 +205,9 @@ matrix:
     - os: linux
       python: pypy3
 ```
+
+Additionally, github workflow is configured to run all tests with the latest version of `Ubuntu` and Python 3
+
 
 ## Unit Test & Coverage
 
@@ -285,11 +290,11 @@ serialize the flattened dict.
 - Iterative Depth First Search (DFS) is used to flatten the JSON object.
  
 - The following JSON types are tested.
-    - number
-    - true
-    - false
+    - boolean
     - null
+    - number
     - object
+    - string
     
 - In the current implementation, if the JSON object has an array, the array will be skipped.
 
