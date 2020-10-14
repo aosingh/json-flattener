@@ -46,11 +46,12 @@ class JSONFlattener:
             elif isinstance(node.val, Dict):
                 for k, v in node.val.items():
                     self._stack.append(Node(val=v, path=node.path+(k,)))
+
+            elif self.skip_unknown:
+                LOG.warning("Skipping %s", node)
+
             else:
-                if self.skip_unknown:
-                    LOG.warning("Skipping %s", node)
-                else:
-                    raise TypeError(f"Unknown type {type(node.val)}")
+                raise TypeError(f"Unknown type {type(node.val)}")
 
     def __call__(self, *args, **kwargs) -> Dict:
         """ Returns the flattened python dict after invoking the procedure.
